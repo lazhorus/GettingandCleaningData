@@ -1,19 +1,20 @@
 run_analysis <- function {
 
 #Set working directory
-#Download the zip file. Unzip.
+setwd("C:/Users/Professor Shadow/datatoolbox/GettingandCleaningData/week4")
+
 #Read training and test data sets into dataframes
 
-xtrain <- read.table("./train/X_train.txt")
-ytrain <- read.table("./train/Y_train.txt")
-subjecttrain <- read.table("./train/subject_train.txt")
+xtrain <- read.table("./UCI HAR Dataset/train/X_train.txt")
+ytrain <- read.table("./UCI HAR Dataset/train/Y_train.txt")
+subjecttrain <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 
-xtest <- read.table("./test/X_test.txt")
-ytest <- read.table("./test/Y_test.txt")
-subjecttest <- read.table("./test/subject_test.txt")
+xtest <- read.table("./UCI HAR Dataset/test/X_test.txt")
+ytest <- read.table("./UCI HAR Dataset/test/Y_test.txt")
+subjecttest <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 
-features <- read.table("./features.txt")
-activities <- read.table("./activity_labels.txt")
+features <- read.table("./UCI HAR Dataset/features.txt")
+activities <- read.table("./UCI HAR Dataset/activity_labels.txt")
 
 ############################################################################################
 #1.  Merge the training and test data sets to creat one data set
@@ -71,10 +72,6 @@ seconddataset <- aggregate( . ~ subject + activity, data = maindf, FUN = mean)
 # Write dataset to a text file for grading
 ############################################################################################################
 
-
-
-
-
-
+write.table(seconddatatest, file = "secondtidy.txt",row.name=FALSE)
 
 }
