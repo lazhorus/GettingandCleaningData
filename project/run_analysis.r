@@ -27,9 +27,9 @@ colnames(maindf) <- features[,2]
 # rbind ytrain and ytest to compose the ACTIVITIES column
 activity_df <- rbind(ytrain,ytest)
 # convert class of newly added activity column to factor
-activity_df <- as.factor(activity_df)
+activity_df$V1 <- as.factor(activity_df$V1) 
 # assign character factor names to integer factor values
-levels(activiy_df$V1) <- activities[,2]
+levels(activity_df$V1) <- activities[,2]
 # cbind column of activities to the MAIN dataframe
 maindf <- cbind(activity_df,maindf)
 # rename the activity column
@@ -41,6 +41,35 @@ subject_df <- rbind(subjecttrain, subjecttest)
 subject_df$V1 <- as.factor(subject_df$V1)
 maindf <- cbind(subject_df,maindf)
 colnames(maindf)[1] <- "subject"
+
+############################################################################################################
+#2.  Extract only the measurements on the mean and standard deviation for each measurement. 
+############################################################################################################
+
+maindf <- maindf[,grepl("mean\\(\\)|std\\(\\)", names(maindf))]
+
+############################################################################################################
+#3.  Use descriptive activity names to name the activities in the data set.  Handled in step 1
+############################################################################################################
+
+############################################################################################################
+#4.  Appropriately label the data set with descriptive variable names.  Handled in step 1
+############################################################################################################
+# For stepss 3 and 4, the subject and activity column need to be re-appended
+maindf <- cbind(activity_df,maindf)
+colnames(maindf)[1] <- "activity"
+maindf <- cbind(subject_df,maindf)
+colnames(maindf)[1] <- "subject" 
+############################################################################################################
+#5.  From the data set in step 4, create a second, independent tidy data set with the average of each 
+#    variable for each activity and each subject.
+############################################################################################################
+
+seconddataset <- aggregate( . ~ subject + activity, data = maindf, FUN = mean)
+
+############################################################################################################
+# Write dataset to a text file for grading
+############################################################################################################
 
 
 
